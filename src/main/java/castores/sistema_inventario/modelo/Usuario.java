@@ -23,7 +23,7 @@ public class Usuario {
     @Column(name = "correo", nullable = false, length = 50, unique = true)
     private String correo;
 
-    @Column(name = "contrasena", nullable = false, length = 25)
+    @Column(name = "contrasena", nullable = false, length = 80)
     private String contrasena;
 
     @Enumerated(EnumType.STRING)

@@ -12,6 +12,7 @@ public class SistemaInventarioApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(SistemaInventarioApplication.class, args);
-
+		System.out.println(new org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder().encode("admin123"));
+		System.out.println(new org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder().encode("almacen123"));
 		}
 }

@@ -14,7 +14,7 @@ public class UsuarioServicio implements InterfaceUsuarioServicio {
 
     @Override
     public Usuario autenticar(String correo, String contrasena) {
-        Usuario usuario = usuarioRepositorio.findByCorreoAndContrasena(correo, contrasena);
+        Usuario usuario = usuarioRepositorio.findByCorreo(correo).orElse(null);
 
         if (usuario == null || !usuario.getEstatus()) {
             return null;
