@@ -2,6 +2,7 @@ package castores.sistema_inventario.modelo;
 
 import castores.sistema_inventario.enums.TipoRol;
 import jakarta.persistence.*;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
