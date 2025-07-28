@@ -31,11 +31,12 @@ public class MovimientoInventarioServicio implements InterfaceMovimientoInventar
 
     @Override
     public List<MovimientoInventario> obtenerPorUsuarioId(Long usuarioId) {
-        return repositorio.findByUsuarioId(usuarioId);
+        return repositorio.findByUsuarioIdUsuario(usuarioId);
     }
 
     @Override
     public List<MovimientoInventario> obtenerPorProductoId(Long productoId) {
-        return repositorio.findByProductoId(productoId);
+        return repositorio.findByProductoIdProducto(productoId);
     }
+
 }

@@ -14,14 +14,14 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class MovimientoInventario {
     @Id
-    @generatedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne
     @JoinColumn(name = "producto_id", nullable = false)
     private Producto producto;
 
-    @manytoOne
+    @ManyToOne
     @JoinColumn(name = "usuario_id", nullable = false)
     private Usuario usuario;
 
@@ -30,7 +30,7 @@ public class MovimientoInventario {
     private TipoMovimiento tipoMovimiento;
 
     @Column(nullable = false)
-    private int cantidad;
+    private Integer cantidad;
 
     @Column(nullable = false)
     private LocalDateTime fechaHora;

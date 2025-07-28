@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Map;
 
 @RestController
-@RequestMapping("inventario-app")
-@CrossOrigin(value = "http://localhost:4200")
+@RequestMapping("/inventario-app")
+@CrossOrigin(value = "http://localhost:4200") // Puerto por default de Angular
 public class UsuarioControlador {
 
     private static final Logger logger = LoggerFactory.getLogger(UsuarioControlador.class);
@@ -21,6 +21,7 @@ public class UsuarioControlador {
     private UsuarioServicio usuarioServicio;
 
     //ENPOINT para LOGIN
+    @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody Map<String, String> credenciales) {
         try {
             String correo = credenciales.get("correo");
@@ -35,7 +36,7 @@ public class UsuarioControlador {
             if (usuario == null) {
                 logger.warn("Login fallido para correo {}", correo);
                 return ResponseEntity.badRequest()
-                        .body(Map.of("error", "Credenciales inv{alidas o usuario inactivo"));
+                        .body(Map.of("error", "Credenciales inválidas o usuario inactivo"));
             }
 
             logger.info("Login exitoso para usuario; {} - Rol: {}", usuario.getNombre(), usuario.getRol());
@@ -79,6 +80,7 @@ public class UsuarioControlador {
     }
 
     // ENPOINT para verificar permisos
+    @GetMapping("/usuario/{id}/permisos")
     public ResponseEntity<?> obtenerPermisos(@PathVariable Long id) {
         try {
             Usuario usuario = usuarioServicio.buscarPorId(id);
@@ -88,7 +90,7 @@ public class UsuarioControlador {
             }
 
             return ResponseEntity.ok(Map.of(
-                   "puedeVerInventario", usuarioServicio.puedeAumentarInventario(usuario),
+                   "puedeVerInventario", usuarioServicio.puedeVerInventario(usuario),
                     "puedeAgregarProductos", usuarioServicio.puedeAgregarProductos(usuario),
                     "puedeAumentarInventario", usuarioServicio.puedeAumentarInventario(usuario),
                     "puedeDarDeBajaReactivar", usuarioServicio.puedeDarDeBajaReactivar(usuario),

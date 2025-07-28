@@ -28,11 +28,6 @@ public class ProductoServicio implements InterfaceProductoServicio{
         this.productoRepositorio.save(producto);
     }
 
-    @Override
-    public void eliminarProductoPorId(Long idProducto) {
-        this.productoRepositorio.deleteById(idProducto);
-    }
-
     // REQUERRIMIENTO: poder agregar un nuevo producto con cantidad inicial 0
     @Override
     public Producto agreggarNuevoProducto(Producto producto) {
@@ -121,7 +116,7 @@ public class ProductoServicio implements InterfaceProductoServicio{
     // REQUERIMIENTO: poder ver los productos activos e inactivos
     @Override
     public List<Producto> listarProductosActivos() {
-        return this.productoRepositorio.finByActivoTrue();
+        return this.productoRepositorio.findByActivoTrue();
     }
     @Override
     public List<Producto> listarProductosInactivos() {
@@ -138,7 +133,7 @@ public class ProductoServicio implements InterfaceProductoServicio{
     @Override
     public boolean validarStockDisponible(Long idProducto, int cantidad) {
         Producto producto = buscarProductosPorId(idProducto);
-        return producto != null && producto.getActivo() && producto.getCantidadActual() > cantidad;
+        return producto != null && producto.getActivo() && producto.getCantidadActual() >= cantidad;
     }
 
     @Override

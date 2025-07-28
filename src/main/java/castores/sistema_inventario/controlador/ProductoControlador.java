@@ -4,11 +4,9 @@ import castores.sistema_inventario.modelo.Producto;
 import castores.sistema_inventario.modelo.Usuario;
 import castores.sistema_inventario.servicio.ProductoServicio;
 import castores.sistema_inventario.servicio.UsuarioServicio;
-import org.apache.coyote.Response;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.support.Repositories;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -115,7 +113,7 @@ public class ProductoControlador {
                 ));
             } else {
                 return ResponseEntity.badRequest()
-                        .body(Map.of("eror", "Error al aumentar inventario"));
+                        .body(Map.of("error", "Error al aumentar inventario"));
             }
         } catch (Exception e) {
             logger.error("Error al aumentar inventario: ", e);
@@ -206,9 +204,9 @@ public class ProductoControlador {
                         .body(Map.of("error", "No tienes permisos para ver productos activos"));
             }
 
-            List<Producto> productosACtivos = productoServicio.listarProductosActivos();
+            List<Producto> productosActivos = productoServicio.listarProductosActivos();
             logger.info("Productos activos consultados por el usuario: {}", usuario.getNombre());
-            return ResponseEntity.ok(productosACtivos);
+            return ResponseEntity.ok(productosActivos);
         }catch (Exception e) {
             logger.error("Error al obtener productos activos: ", e);
             return ResponseEntity.internalServerError()
@@ -305,6 +303,40 @@ public class ProductoControlador {
             }
         } catch(Exception e) {
             logger.error("Error en salida de inventario", e);
+            return ResponseEntity.internalServerError()
+                    .body(Map.of("error", "Error interno del servidor"));
+        }
+    }
+
+    @PutMapping("/productos/{id}/estatus")
+    public ResponseEntity<?> cambiarEstatusProducto(@PathVariable Long id, @RequestParam Long usuarioId) {
+        try {
+            Usuario usuario = usuarioServicio.buscarPorId(usuarioId);
+
+            if (usuario == null || !usuarioServicio.puedeDarDeBajaReactivar(usuario)) {
+                return ResponseEntity.status(403)
+                        .body(Map.of("error", "No tienes permisos para cambiar el estatus del producto"));
+            }
+
+            Producto producto = productoServicio.buscarProductosPorId(id);
+            if (producto == null) {
+                return ResponseEntity.notFound().build();
+            }
+
+            boolean exito = productoServicio.cambiarEstatusProducto(id);
+
+            if (exito) {
+                logger.info("Estatus cambiado para producto: {} por el usuario: {}", producto.getNombre(), usuario.getNombre());
+                return ResponseEntity.ok(Map.of(
+                        "mensaje", "Estatus del producto cambiado exitosamente",
+                        "producto", productoServicio.buscarProductosPorId(id)
+                ));
+            } else {
+                return ResponseEntity.badRequest()
+                        .body(Map.of("error", "Error al cambiar el estatus del producto"));
+            }
+        } catch (Exception e) {
+            logger.error("Error al cambiar estatus del producto: ", e);
             return ResponseEntity.internalServerError()
                     .body(Map.of("error", "Error interno del servidor"));
         }

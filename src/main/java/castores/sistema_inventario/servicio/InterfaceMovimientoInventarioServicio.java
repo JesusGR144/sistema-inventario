@@ -9,6 +9,6 @@ public interface InterfaceMovimientoInventarioServicio {
     MovimientoInventario guardarMovimiento(MovimientoInventario movimiento);
     List<MovimientoInventario> obtenerTodos();
     List<MovimientoInventario> obtenerPorTipo(TipoMovimiento tipoMovimiento);
-    List<MovimientoInventario> obtenerPorUsuarioId(Long usuarioId);
-    List<MovimientoInventario> obtenerPorProductoId(Long productoId);
+    List<MovimientoInventario> obtenerPorUsuarioId(Long idUsuario);
+    List<MovimientoInventario> obtenerPorProductoId(Long idProducto);
 }

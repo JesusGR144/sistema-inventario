@@ -9,7 +9,7 @@ import java.util.List;
 public interface ProductoRepositorio extends JpaRepository <Producto, Long> {
 
     // Para poder visializar los productos activos y no activos
-    List<Producto> finByActivoTrue();
+    List<Producto> findByActivoTrue();
     List<Producto> findByActivoFalse();
 
     // Para solo ver los productos activos con stock (SALIDA)

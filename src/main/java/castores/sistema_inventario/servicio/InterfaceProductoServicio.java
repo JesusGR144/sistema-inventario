@@ -9,7 +9,6 @@ public interface InterfaceProductoServicio {
     List<Producto> listarProductos();
     Producto buscarProductosPorId(Long idProducto);
     void guardarProductos(Producto producto);
-    void eliminarProductoPorId(Long idProducto);
 
     // REQUERRIMIENTO: poder agregar un nuevo producto al inventario
     Producto agreggarNuevoProducto(Producto producto);

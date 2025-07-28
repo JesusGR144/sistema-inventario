@@ -53,7 +53,7 @@ public class UsuarioServicio implements InterfaceUsuarioServicio {
         return usuario != null && usuario.getEstatus() && usuario.getRol() == TipoRol.ALMACENISTA;
     }
 
-    // ✅ Solo ALMACENISTA
+    // Solo ALMACENISTA
     @Override
     public boolean puedeSacarInventario(Usuario usuario) {
         return usuario != null && usuario.getEstatus() && usuario.getRol() == TipoRol.ALMACENISTA;

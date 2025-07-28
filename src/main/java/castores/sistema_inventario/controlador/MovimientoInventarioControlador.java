@@ -19,7 +19,24 @@ public class MovimientoInventarioControlador {
     private InterfaceMovimientoInventarioServicio servicio;
 
     @PostMapping
-    public ResponseEntity<?> crearMivimiento(@RequestBody MovimientoInventario movimiento) {
+    public ResponseEntity<?> crearMovimiento(@RequestBody MovimientoInventario movimiento) {
+        // Validaciones básicas antes de guardar
+        if (movimiento.getCantidad() == null || movimiento.getCantidad() <= 0) {
+            return ResponseEntity.badRequest().body(Map.of("error", "La cantidad debe ser mayor a cero"));
+        }
+        if (movimiento.getProducto() == null || movimiento.getProducto().getIdProducto() == null) {
+            return ResponseEntity.badRequest().body(Map.of("error", "El producto es obligatorio"));
+        }
+        if (movimiento.getUsuario() == null || movimiento.getUsuario().getIdUsuario() == null) {
+            return ResponseEntity.badRequest().body(Map.of("error", "El usuario es obligatorio"));
+        }
+        if (movimiento.getTipoMovimiento() == null) {
+            return ResponseEntity.badRequest().body(Map.of("error", "El tipo de movimiento es obligatorio"));
+        }
+
+        // Asignar fecha/hora automáticamente
+        movimiento.setFechaHora(java.time.LocalDateTime.now());
+
         try {
             MovimientoInventario creado = servicio.guardarMovimiento(movimiento);
             return ResponseEntity.ok(creado);
@@ -51,9 +68,9 @@ public class MovimientoInventarioControlador {
     }
 
     @GetMapping("/usuario/{usuarioId}")
-    public ResponseEntity<?> listarPorUsuario(@PathVariable Long usuarioId) {
+    public ResponseEntity<?> listarPorUsuario(@PathVariable Long idUsuario) {
         try {
-            List<MovimientoInventario> lista = servicio.obtenerPorUsuarioId(usuarioId);
+            List<MovimientoInventario> lista = servicio.obtenerPorUsuarioId(idUsuario);
             return ResponseEntity.ok(lista);
         } catch (Exception e) {
             return ResponseEntity.internalServerError()
@@ -62,9 +79,9 @@ public class MovimientoInventarioControlador {
     }
 
     @GetMapping("/producto/{productoId}")
-    public ResponseEntity<?> listarPorProducto(@PathVariable Long productoId) {
+    public ResponseEntity<?> listarPorProducto(@PathVariable Long idProducto) {
         try {
-            List<MovimientoInventario> lista = servicio.obtenerPorProductoId(productoId);
+            List<MovimientoInventario> lista = servicio.obtenerPorProductoId(idProducto);
             return ResponseEntity.ok(lista);
         } catch (Exception e) {
             return ResponseEntity.internalServerError()
