@@ -12,7 +12,8 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("inventario-app/movimientos-inventario")
-@CrossOrigin(value = "http://localhost:4200") // Puerto por default de Angular
+//@CrossOrigin(value = "http://localhost:4200") // Puerto por default de Angular
+@CrossOrigin(origins = {"http://localhost:4200", "http://127.0.0.1:5500"})
 public class MovimientoInventarioControlador {
 
     @Autowired

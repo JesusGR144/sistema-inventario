@@ -12,7 +12,8 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/inventario-app")
-@CrossOrigin(value = "http://localhost:4200") // Puerto por default de Angular
+//@CrossOrigin(value = "http://localhost:4200") // Puerto por default de Angular
+@CrossOrigin(origins = {"http://localhost:4200", "http://127.0.0.1:5500"})
 public class UsuarioControlador {
 
     private static final Logger logger = LoggerFactory.getLogger(UsuarioControlador.class);
@@ -20,42 +21,6 @@ public class UsuarioControlador {
     @Autowired
     private UsuarioServicio usuarioServicio;
 
-    //ENPOINT para LOGIN
-    @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody Map<String, String> credenciales) {
-        try {
-            String correo = credenciales.get("correo");
-            String contrasena = credenciales.get("contrasena");
-
-            if (correo == null || contrasena == null || correo.trim().isEmpty() || contrasena.trim().isEmpty()) {
-                return ResponseEntity.badRequest()
-                        .body(Map.of("error", "Correo y contraseña son obligatorios"));
-            }
-            Usuario usuario = usuarioServicio.autenticar(correo, contrasena);
-
-            if (usuario == null) {
-                logger.warn("Login fallido para correo {}", correo);
-                return ResponseEntity.badRequest()
-                        .body(Map.of("error", "Credenciales inválidas o usuario inactivo"));
-            }
-
-            logger.info("Login exitoso para usuario; {} - Rol: {}", usuario.getNombre(), usuario.getRol());
-
-            return ResponseEntity.ok(Map.of(
-                    "mensaje", "Login exitoso",
-                    "usuario", Map.of(
-                            "id", usuario.getIdUsuario(),
-                            "nombre", usuario.getNombre(),
-                            "correo", usuario.getCorreo(),
-                            "rol", usuario.getRol().toString()
-                    )
-            ));
-        } catch (Exception e) {
-            logger.error("Error en login: ", e);
-            return ResponseEntity.internalServerError()
-                    .body(Map.of("error", "Error interno del servidor"));
-        }
-    }
     @GetMapping("/usuario/{id}")
     public ResponseEntity<?> obtenerUsuario(@PathVariable Long id) {
         try {

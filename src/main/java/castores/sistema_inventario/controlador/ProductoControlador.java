@@ -15,7 +15,8 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("inventario-app") //http://localhost:8080/inventario-app
-@CrossOrigin(value = "http://localhost:4200") // Puerto por default de Angular
+//@CrossOrigin(value = "http://localhost:4200") // Puerto por default de Angular
+@CrossOrigin(origins = {"http://localhost:4200", "http://127.0.0.1:5500"})
 public class ProductoControlador {
     private static final Logger logger = LoggerFactory.getLogger(ProductoControlador.class);
 

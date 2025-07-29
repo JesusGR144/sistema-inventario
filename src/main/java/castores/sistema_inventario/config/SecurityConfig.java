@@ -26,8 +26,8 @@ public class SecurityConfig {
                                 "/swagger-ui/**",
                                 "/v3/api-docs/**").permitAll()
                         .anyRequest().authenticated()
-                )
-                .formLogin(Customizer.withDefaults());
+                );
+                //.formLogin(Customizer.withDefaults());
         return http.build();
     }
 
