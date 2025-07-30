@@ -26,18 +26,18 @@ spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
 spring.jpa.hibernate.ddl-auto=update
 spring.jpa.show-sql=true
 
-# Configurar el patron del log (en lugar del archivo logback-spring.xml)
+- Configurar el patron del log (en lugar del archivo logback-spring.xml)
 logging.pattern.console=[%thread] %-5level; %logger - %msg%n
 
-# Configurar el nivel de log (INFO)
+- Configurar el nivel de log (INFO)
 logging.level.root=INFO
 
-# Opcional, configurar niveles por paquetes
-#logging.level.gm.sistema-inventarios=DEBUG
-#logging.level.org.springframework=WARN
+- Opcional, configurar niveles por paquetes
+-logging.level.gm.sistema-inventarios=DEBUG
+-logging.level.org.springframework=WARN
 
-# Cambiar el puerto del servidor
-#server.port=8081
+- Cambiar el puerto del servidor
+-server.port=8081
 spring.main.banner-mode=off
 -------------------------------------------
 
