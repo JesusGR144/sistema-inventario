@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Inventario</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css" />
+</head>
+
+<body class="min-h-screen flex flex-col items-center justify-around bg-gray-100 text-black">
+
+    <!-- Titulo e info -->
+    <div class="font-bold text-center">
+        <h2>Inventario de Productos</h2>
+        <div id="rolUsuario"></div>
+    </div>
+    <!-- Titulo e info -->
+
+    <div class="flex gap-4 max-md:flex-col items-center">
+
+        <!-- Formularios -->
+        <div class="flex gap-4 max-md:flex-col items-center">
+            <!-- Form Agregar Producto -->
+            <div id="formAgregarProducto" class="flex flex-col gap-4">
+                <h3 class="text-center font-bold">Agregar Producto</h3>
+                <form id="agregarProductoForm" class="flex flex-col max-w-md m-auto gap-2">
+                    <select class="select select-md" id="talla" required>
+                        <option value="">Selecciona una talla</option>
+                        <option value="CH">Chica</option>
+                        <option value="M">Mediana</option>
+                        <option value="G">Grande</option>
+                        <option value="EG">Extra Grande</option>
+                    </select>
+                    <select class="select select-md" id="color" required>
+                        <option value="">Selecciona un color</option>
+                        <option value="NEGRO">Negro</option>
+                        <option value="BLANCO">Blanco</option>
+                        <option value="AZUL_MARINO">Azul Marino</option>
+                        <option value="ROJO">Rojo</option>
+                        <option value="NARANJA">Naranja</option>
+                    </select>
+                    <select class="select select-md" id="tipo" required>
+                        <option value="">Selecciona un tipo</option>
+                        <option value="MANGA_CORTA">Manga Corta</option>
+                        <option value="MANGA_LARGA">Manga Larga</option>
+                    </select>
+                    <input class="input input-success" type="number" id="precio" placeholder="Precio" required>
+                    <button type="submit" class="btn btn-outline btn-success">Agregar</button>
+                </form>
+            </div>
+            <!-- Form Agregar Producto -->
+    
+            <!-- Form Aumentar Inventario -->
+            <div id="formEntrada" style="display:none;" class="">
+                <h3 class="text-center">Aumentar Inventario</h3>
+                <form id="entradaForm" class="flex flex-col items-center gap-2">
+                    <input class="input input-success" type="number" id="cantidadEntrada" placeholder="Cantidad a agregar"
+                        required>
+                    <div>
+                        <button class="btn btn-outline btn-success" type="submit">Aceptar</button>
+                        <button class="btn btn-outline btn-error" type="button" id="cancelarEntrada">Cancelar</button>
+                    </div>
+                </form>
+            </div>
+            <!-- Form Aumentar Inventario -->
+        </div>
+        <!-- Fin Formularios -->
+    
+        <!-- Filtro y Tabla -->
+        <div>
+            <!-- Filtro desplegable -->
+            <div class="flex justify-center m-4 gap-2 items-center">
+                <label for="filtroProductos" class="font-bold">Filtrar:</label>
+                <select class="select select-md" id="filtroProductos">
+                    <option value="">Todos</option>
+                    <option value="activos">Activos</option>
+                    <option value="inactivos">Inactivos</option>
+                </select>
+            </div>
+            <!-- Filtro desplegable -->
+    
+            <!-- Tabla -->
+            <div class="overflow-x-auto rounded-box border">
+                <table class="table" id="tablaProductos">
+                    <thead class="bg-gray-200">
+                        <tr class="text">
+                            <th>ID</th>
+                            <th>Talla</th>
+                            <th>Color</th>
+                            <th>Tipo</th>
+                            <th>Precio</th>
+                            <th>Cantidad</th>
+                            <th>Estatus</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+            <!-- Tabla -->
+            <div id="mensaje" role="alert" class="font-bold alert alert-info alert-soft text-white mt-2" style="display: none;"></div>
+    
+        </div>
+        <!-- Fin Filtro y Tabla -->
+    </div>
+
+    <script src="assets/js/inventario.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+</body>
+
+</html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Historial de Movimientos</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css" />
+</head>
+
+<body class="min-h-screen flex flex-col items-center justify-around bg-gray-100 text-black">
+    <div class="font-bold text-center">
+        <h2>Historial de Movimientos</h2>
+        <div id="rolUsuario"></div>
+        <div id="mensaje" class="text-black"></div>
+    </div>
+
+    <div class="text-center">
+        <div class="flex justify-center m-4 gap-2 items-center">
+            <label for="tipoFiltro" class="font-bold">Filtrar por tipo:</label>
+            <select class="select select-md" id="tipoFiltro">
+                <option value="">Todos</option>
+                <option value="ENTRADA">Entrada</option>
+                <option value="SALIDA">Salida</option>
+            </select>
+        </div>
+
+
+        <div class="overflow-x-auto rounded-box border">
+            <table border="1" class="table">
+                <thead class="bg-gray-200">
+                    <tr>
+                        <th>Producto</th>
+                        <th>Cantidad</th>
+                        <th>Tipo</th>
+                        <th>Usuario</th>
+                        <th>Fecha y Hora</th>
+                    </tr>
+                </thead>
+                <tbody id="tablaMovimientos"></tbody>
+            </table>
+        </div>
+    </div>
+
+    <script src="assets/js/historial.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+</body>
+
+</html>

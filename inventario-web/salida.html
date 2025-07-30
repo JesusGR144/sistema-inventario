@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Salida de Productos</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css" />
+</head>
+
+<body class="min-h-screen flex flex-col items-center justify-around bg-gray-100 text-black">
+
+    <div class="text-center font-bold">
+        <h2>Salida de Productos</h2>
+        <div id="rolUsuario"></div>
+
+    </div>
+
+    <div class="flex gap-4 max-md:flex-col items-center">
+        <!-- Formulario para registrar salida -->
+        <div id="formSalida" class="text-center">
+            <h3 class="font-bold mb-2">Salida de Inventario</h3>
+            <form id="salidaForm" class="flex flex-col items-center gap-2">
+                <select id="productoSelect" required class="select select-md">
+                    <option value="">Selecciona un producto</option>
+                </select>
+                <input class="input input-success" type="number" id="cantidadSalida" placeholder="Cantidad a retirar"
+                    min="1" required>
+                <button type="submit" class="btn btn-outline btn-success">Registrar Salida</button>
+            </form>
+        </div>
+        <!-- Fin Formulario para registrar salida -->
+
+        <!-- Tabla de productos disponibles para salida -->
+        <div class="text-center">
+            <h3 class="font-bold mb-2">Productos Disponibles</h3>
+            <div class="overflow-x-auto rounded-box border">
+                <table border="1" id="tablaProductos" class="table">
+                    <thead class="bg-gray-200">
+                        <tr>
+                            <th>ID</th>
+                            <th>Descripción</th>
+                            <th>Cantidad Disponible</th>
+                            <th>Precio</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+            <div id="mensaje" class="alert alert-info alert-soft text-white mt-2 font-bold" style="display: none;"></div>
+        </div>
+        <!-- Fin Tabla de productos disponibles para salida -->
+    </div>
+
+    <script src="assets/js/salida.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+</body>
+
+</html>
