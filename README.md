@@ -18,7 +18,7 @@ MySQL Server 9.3
 
 -------------------------------------------
 spring.application.name=sistema-inventarios
-# Conexion a mysql
+- Conexion a mysql
 spring.datasource.url=jdbc:mysql://localhost:3306/nombre_de_tu_bd?createDatabaseIfNotExist=true
 spring.datasource.username=tu_usuario
 spring.datasource.password=tu_contraseña
