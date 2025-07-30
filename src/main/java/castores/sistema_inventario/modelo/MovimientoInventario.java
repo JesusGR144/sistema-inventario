@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 import java.time.LocalDateTime;
 
 @Entity
+@Table(name = "movimientos_inventario")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -18,11 +19,11 @@ public class MovimientoInventario {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "producto_id", nullable = false)
+    @JoinColumn(name = "id_producto", nullable = false)
     private Producto producto;
 
     @ManyToOne
-    @JoinColumn(name = "usuario_id", nullable = false)
+    @JoinColumn(name = "id_usuario", nullable = false)
     private Usuario usuario;
 
     @Enumerated(EnumType.STRING)
@@ -34,4 +35,11 @@ public class MovimientoInventario {
 
     @Column(nullable = false)
     private LocalDateTime fechaHora;
+
+    @PrePersist
+    protected void onCreate() {
+        if (fechaHora == null) {
+            fechaHora = LocalDateTime.now();
+        }
+    }
 }

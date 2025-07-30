@@ -1,8 +1,8 @@
 package castores.sistema_inventario.modelo;
 
 import castores.sistema_inventario.enums.Color;
-import castores.sistema_inventario.enums.TIpoPlayera;
 import castores.sistema_inventario.enums.Talla;
+import castores.sistema_inventario.enums.TipoPlayera;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
@@ -35,11 +35,11 @@ public class Producto {
     @NotNull(message = "EL tipo es obligatorio")
     @Enumerated(EnumType.STRING)
     @Column(name = "tipo", nullable = false, length = 20)
-    private TIpoPlayera tipo;
+    private TipoPlayera tipo;
 
     @NotNull(message = "El precio es obligatorio")
     @DecimalMin(value = "0.0", inclusive = false, message = "EL precio debe ser mayor a 0")
-    @Digits(integer = 3, fraction = 2, message = "Formato de precio inv{alido")
+    @Digits(integer = 3, fraction = 2, message = "Formato de precio inváido")
     @Column(name = "precio", nullable = false, precision = 5, scale = 2)
     private BigDecimal precio;
 
@@ -98,7 +98,7 @@ public class Producto {
     public String getNombre() {
         return String.format("Playera %s %s %s",
                 color.getNombre(),
-                talla.name(),
+                talla.getDescripcion(),
                 tipo.getDescripcion());
     }
 }

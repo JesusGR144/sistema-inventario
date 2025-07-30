@@ -2,7 +2,9 @@ package castores.sistema_inventario.controlador;
 
 import castores.sistema_inventario.enums.TipoMovimiento;
 import castores.sistema_inventario.modelo.MovimientoInventario;
+import castores.sistema_inventario.modelo.Usuario;
 import castores.sistema_inventario.servicio.InterfaceMovimientoInventarioServicio;
+import castores.sistema_inventario.servicio.UsuarioServicio;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,6 +20,9 @@ public class MovimientoInventarioControlador {
 
     @Autowired
     private InterfaceMovimientoInventarioServicio servicio;
+
+    @Autowired
+    private UsuarioServicio usuarioServicio;
 
     @PostMapping
     public ResponseEntity<?> crearMovimiento(@RequestBody MovimientoInventario movimiento) {
@@ -47,8 +52,15 @@ public class MovimientoInventarioControlador {
     }
 
     @GetMapping
-    public ResponseEntity<?> listarTodos() {
+    public ResponseEntity<?> listarTodos(@RequestParam Long usuarioId) {
         try {
+            Usuario usuario = usuarioServicio.buscarPorId(usuarioId);
+
+            if (usuario == null || !usuarioServicio.puedeVerHistorial(usuario)) {
+                return ResponseEntity.status(403)
+                        .body(Map.of("error", "No tienes permisos para ver el historial"));
+            }
+
             List<MovimientoInventario> lista = servicio.obtenerTodos();
             return ResponseEntity.ok(lista);
         } catch (Exception e) {
@@ -58,8 +70,15 @@ public class MovimientoInventarioControlador {
     }
 
     @GetMapping("/tipo/{tipo}")
-    public ResponseEntity<?> listarPorTipo(@PathVariable TipoMovimiento tipo) {
+    public ResponseEntity<?> listarPorTipo(@PathVariable TipoMovimiento tipo, @RequestParam Long usuarioId) {
         try {
+            Usuario usuario = usuarioServicio.buscarPorId(usuarioId);
+
+            if (usuario == null || !usuarioServicio.puedeVerHistorial(usuario)) {
+                return ResponseEntity.status(403)
+                        .body(Map.of("error", "No tienes permisos para ver el historial"));
+            }
+
             List<MovimientoInventario> lista = servicio.obtenerPorTipo(tipo);
             return  ResponseEntity.ok(lista);
         } catch (Exception e) {
@@ -69,9 +88,9 @@ public class MovimientoInventarioControlador {
     }
 
     @GetMapping("/usuario/{usuarioId}")
-    public ResponseEntity<?> listarPorUsuario(@PathVariable Long idUsuario) {
+    public ResponseEntity<?> listarPorUsuario(@PathVariable Long usuarioId) {
         try {
-            List<MovimientoInventario> lista = servicio.obtenerPorUsuarioId(idUsuario);
+            List<MovimientoInventario> lista = servicio.obtenerPorUsuarioId(usuarioId);
             return ResponseEntity.ok(lista);
         } catch (Exception e) {
             return ResponseEntity.internalServerError()
@@ -80,9 +99,9 @@ public class MovimientoInventarioControlador {
     }
 
     @GetMapping("/producto/{productoId}")
-    public ResponseEntity<?> listarPorProducto(@PathVariable Long idProducto) {
+    public ResponseEntity<?> listarPorProducto(@PathVariable Long productoId) {
         try {
-            List<MovimientoInventario> lista = servicio.obtenerPorProductoId(idProducto);
+            List<MovimientoInventario> lista = servicio.obtenerPorProductoId(productoId);
             return ResponseEntity.ok(lista);
         } catch (Exception e) {
             return ResponseEntity.internalServerError()

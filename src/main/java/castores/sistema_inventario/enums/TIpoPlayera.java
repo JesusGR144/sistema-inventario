@@ -1,12 +1,12 @@
 package castores.sistema_inventario.enums;
 
-public enum TIpoPlayera {
+public enum TipoPlayera {
     MANGA_CORTA("Manga Corta"),
     MANGA_LARGA("Manga Larga");
 
     private final String descripcion;
 
-    TIpoPlayera(String descripcion) {
+    TipoPlayera(String descripcion) {
         this.descripcion = descripcion;
     }
 

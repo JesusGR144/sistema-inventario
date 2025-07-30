@@ -1,7 +1,10 @@
 package castores.sistema_inventario.controlador;
 
+import castores.sistema_inventario.enums.TipoMovimiento;
+import castores.sistema_inventario.modelo.MovimientoInventario;
 import castores.sistema_inventario.modelo.Producto;
 import castores.sistema_inventario.modelo.Usuario;
+import castores.sistema_inventario.servicio.InterfaceMovimientoInventarioServicio;
 import castores.sistema_inventario.servicio.ProductoServicio;
 import castores.sistema_inventario.servicio.UsuarioServicio;
 import org.slf4j.Logger;
@@ -25,6 +28,9 @@ public class ProductoControlador {
 
     @Autowired
     private UsuarioServicio usuarioServicio;
+
+    @Autowired
+    private InterfaceMovimientoInventarioServicio movimientoServicio;
 
     // REQUERIMIENTO: Ver modulo inventario - CUALQUIER USUARIO
     @GetMapping("/productos") //http:localhost:8080/inventario-app/productos
@@ -101,7 +107,7 @@ public class ProductoControlador {
                         .body(Map.of("error", "No esta permitido disminuir el inventario"));
             }
 
-            boolean exito = productoServicio.aumentarInventario(id, cantidad);
+            boolean exito = productoServicio.aumentarInventario(id, cantidad, usuarioId);
 
             if (exito) {
                 Producto productoActualizado = productoServicio.buscarProductosPorId(id);
@@ -289,7 +295,7 @@ public class ProductoControlador {
                         .body(Map.of("error", "No hay suficiente stock disponible. Stock actual: " + producto.getCantidadActual()));
             }
 
-            boolean exito = productoServicio.reducirInventario(id, cantidad);
+            boolean exito = productoServicio.reducirInventario(id, cantidad, usuarioId);
 
             if (exito) {
                 Producto productoActualizado = productoServicio.buscarProductosPorId(id);
